@@ -39,7 +39,8 @@ package fko.FrankyJ.types;
 
    // order has influence on Piece
    White(1),      // 0
-   Black(-1);     // 1
+   Black(-1),     // 1
+   NoColor(0);    // 2
 
    /**
     * This is 1 for white and -1 for black. Useful in evaluation and pawn directions
@@ -64,6 +65,10 @@ package fko.FrankyJ.types;
          case Black -> {
            c.opponentColor = White;
            c.shortName = 'b';
+         }
+         case NoColor -> {
+           c.opponentColor = NoColor;
+           c.shortName = '-';
          }
        }
      }

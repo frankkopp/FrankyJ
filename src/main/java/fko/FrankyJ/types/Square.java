@@ -39,13 +39,13 @@ public enum Square {
   // @formatter:on
 
   public final long Bb;
-  public final File     file;
-  public final Rank     rank;
+  public final File file;
+  public final Rank rank;
 
   // precomputed values
-
-  private final int[] distance = new int[64];
+  private final int[]    distance   = new int[64];
   private final Square[] neighbours = new Square[8];
+
   Square() {
     if (ordinal() < 64) {
       file = File.values()[ordinal() & 7];
@@ -69,7 +69,8 @@ public enum Square {
       // distance
       for (Square s2 : Square.values()) {
         if (s2 == SqNone) continue;
-        s.distance[s2.ordinal()] = Math.max(File.distance(s.file, s2.file), Rank.distance(s.rank, s2.rank));
+        s.distance[s2.ordinal()] =
+          Math.max(File.distance(s.file, s2.file), Rank.distance(s.rank, s2.rank));
       }
 
       // neighbours
@@ -102,6 +103,7 @@ public enum Square {
       }
     }
   }
+
   public static Square getSquare(int sq) {
     if (sq >= SqNone.ordinal()) return SqNone;
     return Square.values()[sq];
