@@ -25,6 +25,7 @@
 
 package fko.FrankyJ.types;
 
+// Bitboards are 64 bit long with 1 bit for each square on the board.
 public class Bitboard {
 
   private static final long NotMostSignificantBitMask = ~(1L << 63);
@@ -68,11 +69,11 @@ public class Bitboard {
     return switch (d) {
       case North -> (NotRank8Mask & bitboard) << 8;
       case East -> (NotMostSignificantBitMask & bitboard) << 1 & NotFileAMask;
-      case South -> bitboard >> 8;
-      case West -> (bitboard >> 1) & NotFileHMask;
+      case South -> bitboard >>> 8;
+      case West -> (bitboard >>> 1) & NotFileHMask;
       case Northeast -> (NotRank8Mask & bitboard) << 9 & NotFileAMask;
-      case Southeast -> (bitboard >> 7) & NotFileAMask;
-      case Southwest -> (bitboard >> 9) & NotFileHMask;
+      case Southeast -> (bitboard >>> 7) & NotFileAMask;
+      case Southwest -> (bitboard >>> 9) & NotFileHMask;
       case Northwest -> (bitboard << 7) & NotFileHMask;
     };
   }

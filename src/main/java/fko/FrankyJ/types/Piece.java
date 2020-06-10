@@ -28,6 +28,9 @@ package fko.FrankyJ.types;
 import static fko.FrankyJ.types.Color.*;
 import static fko.FrankyJ.types.PieceType.*;
 
+/**
+ * All pieces of a chess game
+ */
 public enum Piece {
   // @formatter:off
   PieceNone      (NoColor, PtNone, '-', '-', "-"),

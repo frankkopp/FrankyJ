@@ -25,6 +25,11 @@
 
 package fko.FrankyJ.types;
 
+/**
+ * Evaluation constants and functions for a chess games.
+ * The values are int (Java does no support a typedef
+ * or enum as int.
+ */
 public class Value {
   public static final int ValueZero               = 0;
   public static final int ValueDraw               = 0;
@@ -39,11 +44,15 @@ public class Value {
   private Value() {
   }
 
+  public static boolean validValue(final int value) {
+    return value >= ValueMin && value <= ValueMax;
+  }
+
   /**
    * IsCheckMateValue returns true if value is above the check mate threshold
    * which typically is set to check mate value minus the maximum search depth
    */
-  public static boolean isCheckMateValue(int value) {
+  public static boolean isCheckMateValue(final int value) {
     return Math.abs(value) > ValueCheckMateThreshold;
   }
 

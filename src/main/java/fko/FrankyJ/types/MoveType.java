@@ -25,36 +25,19 @@
 
 package fko.FrankyJ.types;
 
-// PieceType is a set of enums for piece types in chess
-public enum PieceType {
+// MoveType is used for the different move types we use to encode moves.
+//  Normal
+//	Promotion
+//	EnPassant
+//	Castling
+public enum MoveType {
+  Normal,
+  Promotion,
+  EnPassant,
+  Castling;
 
-  // @formatter:off
-  PtNone   (false, 0,    0, "PtNone", '-'),
-  King     (false, 0, 2000,   "King", 'K'),
-  Pawn     (false, 0,  100,   "Pawn", 'P'),
-  Knight   (false, 1,  320, "Knight", 'N'),
-  Bishop   (true,  1,  330, "Bishop", 'B'),
-  Rook     (true,  2,  500,   "Rook", 'R'),
-  Queen    (true,  4,  900,  "Queen", 'Q');
-  // @formatter:on
-
-  public final boolean sliding;
-  public final int gamePhaseValue;
-  public final int value;
-  public final String name;
-  public final char symbol;
-
-  PieceType(final boolean sliding, final int gamePhaseValue, final int value, final String name, final char symbol) {
-    this.sliding = sliding;
-    this.gamePhaseValue = gamePhaseValue;
-    this.value = value;
-    this.name = name;
-    this.symbol = symbol;
+  public static MoveType getMoveType(int mt) {
+    if (mt > Castling.ordinal()) throw new IllegalArgumentException("No move with ordinal " + mt);
+    return MoveType.values()[mt];
   }
-
-  public static PieceType getPieceType(int pt) {
-    if (pt > Queen.ordinal()) return PtNone;
-    return PieceType.values()[pt];
-  }
-
 }
