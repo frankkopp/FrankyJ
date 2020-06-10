@@ -7,6 +7,13 @@
     <groupId>fko.FrankyJ</groupId>
     <artifactId>FrankyJ</artifactId>
     <version>0.1-SNAPSHOT</version>
+
+    <properties>
+        <!-- JAVA8 -->
+        <maven.compiler.source>14.0</maven.compiler.source>
+        <maven.compiler.target>14.0</maven.compiler.target>
+    </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -15,12 +22,5 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
-    <properties>
-        <!-- JAVA8 -->
-        <maven.compiler.source>14.0</maven.compiler.source>
-        <maven.compiler.target>14.0</maven.compiler.target>
-    </properties>
 
 </project>
