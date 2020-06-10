@@ -38,40 +38,48 @@ public enum Square {
   SqNone;
   // @formatter:on
 
+  public final long Bb;
+  public final File     file;
+  public final Rank     rank;
 
+  // precomputed values
+
+  private final int[] distance = new int[64];
+  private final Square[] neighbours = new Square[8];
   Square() {
     if (ordinal() < 64) {
       file = File.values()[ordinal() & 7];
       rank = Rank.values()[ordinal() >>> 3];
       Bb = 1L << ordinal();
-    }
-    else {
+    } else {
       file = File.NoFile;
       rank = Rank.NoRank;
       Bb = 0;
     }
   }
 
-  // precomputed values
-  private final long Bb;
+  // initialization and pre-computation which can't be done in
+  // constructor
 
-  // precomputed file and rank
-  private       File file;
-  private       Rank rank;
-  private final Square[] neighbours = new Square[8];
-
-  // initialization and pre-computation
   static {
     // pre-compute fields
     for (Square s : Square.values()) {
+      if (s == SqNone) continue;
 
+      // distance
+      for (Square s2 : Square.values()) {
+        if (s2 == SqNone) continue;
+        s.distance[s2.ordinal()] = Math.max(File.distance(s.file, s2.file), Rank.distance(s.rank, s2.rank));
+      }
+
+      // neighbours
       for (Direction d : Direction.values()) {
         int idx = s.ordinal();
         switch (d) {
           case North, South -> {
             idx += d.dir;
           }
-          case East, NorthEast, Southeast -> {
+          case East, Northeast, Southeast -> {
             if (s.file.ordinal() < File.h.ordinal()) {
               idx += d.dir;
             } else {
@@ -89,19 +97,18 @@ public enum Square {
         if (idx >= 0 && idx < SqNone.ordinal()) {
           s.neighbours[d.ordinal()] = getSquare(idx);
         } else {
-            s.neighbours[d.ordinal()] = SqNone;
+          s.neighbours[d.ordinal()] = SqNone;
         }
       }
     }
   }
-
   public static Square getSquare(int sq) {
     if (sq >= SqNone.ordinal()) return SqNone;
     return Square.values()[sq];
   }
 
   public static Square getSquare(File f, Rank r) {
-    if (f == File.NoFile|| r == Rank.NoRank) return SqNone;
+    if (f == File.NoFile || r == Rank.NoRank) return SqNone;
     // index starts with 0 while file and rank start with 1 - decrease
     return Square.values()[(r.ordinal() << 3) + f.ordinal()];
   }
@@ -110,20 +117,14 @@ public enum Square {
     return this.neighbours[d.ordinal()];
   }
 
+  public int distance(Square sq) {
+    return distance[sq.ordinal()];
+  }
+
   public Square pawnPush(Color c) {
-    return c == Color.White ? this.neighbours[Direction.North.ordinal()] : this.neighbours[Direction.South.ordinal()];
-  }
-
-  public long Bb() {
-    return Bb;
-  }
-
-  public File getFile() {
-    return file;
-  }
-
-  public Rank getRank() {
-    return rank;
+    return c == Color.White
+           ? this.neighbours[Direction.North.ordinal()]
+           : this.neighbours[Direction.South.ordinal()];
   }
 
   @Override
@@ -131,6 +132,6 @@ public enum Square {
     if (this.ordinal() >= SqNone.ordinal()) {
       return "--";
     }
-    return file.toString()+rank.toString();
+    return file.toString() + rank.toString();
   }
 }

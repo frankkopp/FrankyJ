@@ -48,6 +48,11 @@ package fko.FrankyJ.types;
      return Rank.values()[rank];
    }
 
+   // returns the distance in moves between ranks
+   public static int distance(Rank lhs, Rank rhs) {
+     return Math.abs(lhs.ordinal()-rhs.ordinal());
+   }
+
    @Override
    public String toString() {
      if (this == NoRank) {

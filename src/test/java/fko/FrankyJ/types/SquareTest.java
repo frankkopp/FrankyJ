@@ -28,7 +28,7 @@ package fko.FrankyJ.types;
 import org.junit.jupiter.api.Test;
 
 import static fko.FrankyJ.types.Square.*;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class SquareTest {
 
@@ -45,16 +45,16 @@ class SquareTest {
 
   @Test
   void getSquareFileRankTest() {
-    assertEquals(File.a, SqA1.getFile());
-    assertEquals(Rank.r1, SqA1.getRank());
-    assertEquals(Rank.NoRank, SqNone.getRank());
+    assertEquals(File.a, SqA1.file);
+    assertEquals(Rank.r1, SqA1.rank);
+    assertEquals(Rank.NoRank, SqNone.rank);
   }
 
   @Test
   void bitboard() {
-    assertEquals(1L, SqA1.Bb());
-    assertEquals(1L << 63, SqH8.Bb());
-    assertEquals(0b10000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000L, SqH8.Bb());
+    assertEquals(1L, SqA1.Bb);
+    assertEquals(1L << 63, SqH8.Bb);
+    assertEquals(0b10000000_00000000_00000000_00000000_00000000_00000000_00000000_00000000L, SqH8.Bb);
   }
 
   @Test
@@ -63,7 +63,7 @@ class SquareTest {
     assertEquals(SqB1, SqA1.to(Direction.East));
     assertEquals(SqNone, SqA1.to(Direction.West));
     assertEquals(SqE5, SqE4.to(Direction.North));
-    assertEquals(SqF5, SqE4.to(Direction.NorthEast));
+    assertEquals(SqF5, SqE4.to(Direction.Northeast));
     assertEquals(SqF4, SqE4.to(Direction.East));
     assertEquals(SqF3, SqE4.to(Direction.Southeast));
     assertEquals(SqE3, SqE4.to(Direction.South));

@@ -30,7 +30,7 @@ public enum Direction {
   East(1), // 1
   South(-8), // -North
   West(-1), // -East
-  NorthEast(9), // North + East
+  Northeast(9), // North + East
   Southeast(-7), // South + East
   Southwest(-9), // South + West
   Northwest(7); // North + West

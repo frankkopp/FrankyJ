@@ -46,6 +46,11 @@ public enum File {
     return File.values()[file];
   }
 
+  // returns the distance in moves between files
+  public static int distance(File lhs, File rhs) {
+    return Math.abs(lhs.ordinal()-rhs.ordinal());
+  }
+
   @Override
   public String toString() {
     if (this == NoFile) {
