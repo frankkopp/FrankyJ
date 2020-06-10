@@ -27,15 +27,17 @@ package fko.FrankyJ.types;
 
 public class Bitboard {
 
-  static private final long NotMostSignificantBitMask = ~(1L << 63);
-  static private final long NotRank8Mask              = ~Rank.r8.Bb;
-  static private final long NotFileAMask              = ~File.a.Bb;
-  static private final long NotFileHMask              = ~File.h.Bb;
+  private static final long NotMostSignificantBitMask = ~(1L << 63);
+  private static final long NotRank8Mask              = ~Rank.r8.Bb;
+  private static final long NotFileAMask              = ~File.a.Bb;
+  private static final long NotFileHMask              = ~File.h.Bb;
 
-  static public final long BbZero = 0L;
-  static public final long BbOne  = 1L;
-  static public final long BbAll  = ~0L;
+  public  static final long BbZero = 0L;
+  public  static final long BbOne  = 1L;
+  public  static final long BbAll  = ~0L;
 
+  private Bitboard() {
+  }
   /**
    * PushSquare sets the corresponding bit of the bitboard for the square
    */
