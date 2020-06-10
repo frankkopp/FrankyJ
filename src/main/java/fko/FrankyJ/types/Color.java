@@ -29,11 +29,11 @@ package fko.FrankyJ.types;
  /**
   * The Color class represents the two colors of a chess game and a
   * special color for empty fields (NONE).
-  * This class can not be instantiated. It keeps public references to the only possible instances
-  * White and Black
-  * These instances are immutable. As it is not possible to have any other instances of
-  * Colors the use of these instances is as fast as if using an int.
-  * @author Frank Kopp (frank@familie-kopp.de)
+  * This class can not be instantiated. It keeps public references
+  * to the only possible instances White and Black
+  * These instances are immutable. As it is not possible to have any
+  * other instances of Colors the use of these instances is as fast
+  * as if using an int.
   */
  public enum Color {
 

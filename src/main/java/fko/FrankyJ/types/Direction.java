@@ -35,15 +35,9 @@ public enum Direction {
   Southwest(-9), // South + West
   Northwest(7); // North + West
 
-  private final int dir;
+  public final int dir;
 
   Direction(final int d) {
     this.dir = d;
-  }
-
-
-
-  public int get() {
-    return dir;
   }
 }

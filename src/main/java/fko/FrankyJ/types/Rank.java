@@ -33,13 +33,12 @@ package fko.FrankyJ.types;
    r1, r2, r3, r4, r5, r6, r7, r8, NoRank;
 
    // pre-filled list with all squares
-   public final        long   bitBoard;
-
+   public final long Bb;
 
    Rank() {
-     final long mask = 0b11111111L;
-     if (ordinal() < 8) this.bitBoard = mask << (8 * (7 - ordinal()));
-     else bitBoard = 0;
+     final long a = 0b00000000_00000000_00000000_00000000_00000000_00000000_00000000_11111111L;
+     if (ordinal() < 8) Bb = a << (ordinal()*8);
+     else Bb = 0;
    }
 
    /**

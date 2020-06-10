@@ -38,8 +38,22 @@ public enum Square {
   SqNone;
   // @formatter:on
 
+
+  Square() {
+    if (ordinal() < 64) {
+      file = File.values()[ordinal() & 7];
+      rank = Rank.values()[ordinal() >>> 3];
+      Bb = 1L << ordinal();
+    }
+    else {
+      file = File.NoFile;
+      rank = Rank.NoRank;
+      Bb = 0;
+    }
+  }
+
   // precomputed values
-  private long    bitBoard;
+  private final long Bb;
 
   // precomputed file and rank
   private       File file;
@@ -51,32 +65,22 @@ public enum Square {
     // pre-compute fields
     for (Square s : Square.values()) {
 
-      if (s == SqNone) {
-        s.bitBoard = 0L;
-        s.file = File.NoFile;
-        s.rank = Rank.NoRank;
-        continue;
-      }
-
-      s.bitBoard = 1L << s.ordinal();
-      s.file = File.values()[s.ordinal() & 7];
-      s.rank = Rank.values()[s.ordinal() >>> 3];
       for (Direction d : Direction.values()) {
         int idx = s.ordinal();
         switch (d) {
           case North, South -> {
-            idx += d.get();
+            idx += d.dir;
           }
           case East, NorthEast, Southeast -> {
             if (s.file.ordinal() < File.h.ordinal()) {
-              idx += d.get();
+              idx += d.dir;
             } else {
               idx = SqNone.ordinal();
             }
           }
           case West, Southwest, Northwest -> {
             if (s.file.ordinal() > File.a.ordinal()) {
-              idx += d.get();
+              idx += d.dir;
             } else {
               idx = SqNone.ordinal();
             }
@@ -91,21 +95,11 @@ public enum Square {
     }
   }
 
-  /**
-   * @param sq index
-   * @return Square for index
-   */
   public static Square getSquare(int sq) {
     if (sq >= SqNone.ordinal()) return SqNone;
     return Square.values()[sq];
   }
 
-  /**
-   * Returns the Square for the given file and rank
-   * @param f
-   * @param r
-   * @return the Square for the given file and rank
-   */
   public static Square getSquare(File f, Rank r) {
     if (f == File.NoFile|| r == Rank.NoRank) return SqNone;
     // index starts with 0 while file and rank start with 1 - decrease
@@ -121,7 +115,7 @@ public enum Square {
   }
 
   public long Bb() {
-    return bitBoard;
+    return Bb;
   }
 
   public File getFile() {

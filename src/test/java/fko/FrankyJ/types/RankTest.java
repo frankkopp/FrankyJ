@@ -25,33 +25,14 @@
 
 package fko.FrankyJ.types;
 
-/**
- * This enum represents all files of a chess board. If used in a loop via values() omit NOFILE.
- */
-public enum File {
+import org.junit.jupiter.api.Test;
 
-  a, b, c, d, e, f, g, h, NoFile;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-  // pre-filled list with all squares
-  public final long Bb;
+class RankTest {
 
-  File() {
-    final long a = 0b00000001_00000001_00000001_00000001_00000001_00000001_00000001_00000001L;
-    if (ordinal() < 8) Bb = a << ordinal();
-    else Bb = 0;
+  @Test
+  void bitboard() {
+    assertEquals(0b11111111_00000000_00000000_00000000_00000000_00000000_00000000_00000000L, Rank.r8.Bb);
   }
-
-  // returns the enum File for a given file number
-  public static File get(int file) {
-    return File.values()[file];
-  }
-
-  @Override
-  public String toString() {
-    if (this == NoFile) {
-      return "-";
-    }
-    return this.name();
-  }
-
 }
