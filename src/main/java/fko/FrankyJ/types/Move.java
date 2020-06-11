@@ -62,6 +62,10 @@ public class Move {
     return createMove(from, to, mt, pt, Value.ValueNA);
   }
 
+  /**
+   * Creates a move int by encoding the different parts bit wise into the int.
+   * Is overloaded for convenience with different sets of arguments.
+   */
   public static int createMove(final Square from, final Square to, final MoveType mt, final PieceType pt, final int value) {
     int prom = 0;
     if (pt.ordinal() > PieceType.Knight.ordinal()) {
@@ -77,10 +81,16 @@ public class Move {
            (value - Value.ValueNA) << VALUE_SHIFT;
   }
 
+  /**
+   * returns the from square of the move
+   */
   public static Square fromSquare(int move) {
     return Square.getSquare((move & FROM_MASK) >>> FROM_SHIFT);
   }
 
+  /**
+   * returns the target square of the move
+   */
   public static Square toSquare(int move) {
     return Square.getSquare(move & TO_MASK);
   }
@@ -139,7 +149,47 @@ public class Move {
     if (moveOf(move) == NoMove) return "no move";
     return fromSquare(move).toString() +
            toSquare(move).toString() +
-           (typeOf(move) == Promotion ? promotionTypeOf(move).toString() : "");
+           (typeOf(move) == Promotion ? promotionTypeOf(move).symbol : "");
+  }
+
+  public static String toVerboseString(int move) {
+    if (moveOf(move) == NoMove) return "no move";
+    return String.format("Move {to: %s from: %s type: %s %s value: %s (int: %d)}",
+                         fromSquare(move), toSquare(move), typeOf(move).name(),
+                         typeOf(move) == Promotion ? "prom: " + promotionTypeOf(move).name : "",
+                         valueOf(move),
+                         move);
+  }
+
+  public static String toBitString(int move) {
+    StringBuilder sb = new StringBuilder();
+    int i = 31;
+    // value
+    for (; i >= 16; i--) {
+      sb.append((move & (1 << i)) != 0 ? "1" : "0");
+    }
+    sb.append(".");
+    // move type
+    for (; i >= 14; i--) {
+      sb.append((move & (1 << i)) != 0 ? "1" : "0");
+    }
+    sb.append(".");
+    // prom type
+    for (; i >= 12; i--) {
+      sb.append((move & (1 << i)) != 0 ? "1" : "0");
+    }
+    sb.append(".");
+    // from
+    for (; i >= 6; i--) {
+      sb.append((move & (1 << i)) != 0 ? "1" : "0");
+    }
+    sb.append(".");
+    // to
+    for (; i >= 0; i--) {
+      sb.append((move & (1 << i)) != 0 ? "1" : "0");
+    }
+    sb.append(" (value.movetype.promtype.from.to)");
+    return sb.toString();
   }
 
   // Move bit shift and mask constants

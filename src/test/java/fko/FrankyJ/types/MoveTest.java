@@ -25,8 +25,27 @@
 
 package fko.FrankyJ.types;
 
+import org.junit.jupiter.api.Test;
+
+import static fko.FrankyJ.types.MoveType.Promotion;
+import static fko.FrankyJ.types.PieceType.Queen;
+import static fko.FrankyJ.types.Square.SqH7;
+import static fko.FrankyJ.types.Square.SqH8;
+import static fko.FrankyJ.types.Value.ValueMax;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 class MoveTest {
 
+  @Test
+  void createMove() {
+    int move = Move.createMove(SqH8, SqH7, Promotion, Queen, ValueMax);
+    System.out.println(Move.toString(move));
+    System.out.println(Move.toVerboseString(move));
+    System.out.println(Move.toBitString(move));
+    assertEquals("h8h7Q", Move.toString(move));
+    assertEquals("Move {to: h8 from: h7 type: Promotion prom: Queen value: 10000 (int: 1638432759)}", Move.toVerboseString(move));
+    assertEquals("0110000110101000.01.11.111111.110111 (value.movetype.promtype.from.to)", Move.toBitString(move));
+  }
 
 
 }
