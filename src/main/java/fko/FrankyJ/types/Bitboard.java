@@ -148,9 +148,4 @@ public class Bitboard {
     return sb.toString();
   }
 
-
-  static {
-
-  }
-
 }
