@@ -25,11 +25,15 @@
 
 package fko.FrankyJ.types;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+
+import java.util.EnumMap;
 
 public class TimingTest {
 
   @Test
+  @Disabled
   void TimingEnumVsConst() {
     final int rounds = 10;
     final long iterations = 10_000_000_000L;
@@ -54,6 +58,93 @@ public class TimingTest {
       long start = System.nanoTime();
       for (long i = 0; i < iterations; i++) {
         res = Bitboard.BbZero;
+      }
+      long stop = System.nanoTime();
+      long elapsed = stop - start;
+      System.out.println("Test took    " + String.format("%,d", elapsed) + " ns for " + String.format("%,d", iterations) + " iterations");
+      System.out.println("Test took    " + String.format("%,d", (elapsed / iterations)) + " ns per test");
+      System.out.println("Test per sec " + String.format("%,d", (long)(iterations * 1e9) / elapsed) + " tps");
+    }
+
+    System.out.println(res);
+  }
+
+  @Test
+  @Disabled
+  void enumMap() {
+    final int rounds = 5;
+    final long iterations = 1_000_000L;
+
+    Piece res = Piece.PieceNone;
+    Piece[] board = new Piece[64];
+    EnumMap<Square, Piece> board2 = new EnumMap<>(Square.class);
+
+    for (int r = 1; r <= rounds; r++) {
+      System.out.println("Round " + r);
+      long start = System.nanoTime();
+      for (long i = 0; i < iterations; i++) {
+        for (Square sq : Square.values) {
+          if (sq == Square.SqNone) continue;
+          board[sq.ordinal()] = Piece.WhiteKing;
+        }
+        for (Square sq : Square.values) {
+          if (sq == Square.SqNone) continue;
+          board[sq.ordinal()] = Piece.BlackKing;
+        }
+        for (Square sq : Square.values) {
+          if (sq == Square.SqNone) continue;
+          res = board[sq.ordinal()];
+        }
+      }
+      long stop = System.nanoTime();
+      long elapsed = stop - start;
+      System.out.println("Test took    " + String.format("%,d", elapsed) + " ns for " + String.format("%,d", iterations) + " iterations");
+      System.out.println("Test took    " + String.format("%,d", (elapsed / iterations)) + " ns per test");
+      System.out.println("Test per sec " + String.format("%,d", (long)(iterations * 1e9) / elapsed) + " tps");
+    }
+
+    System.out.println();
+
+    for (int r = 1; r <= rounds; r++) {
+      System.out.println("Round " + r);
+      long start = System.nanoTime();
+      for (long i = 0; i < iterations; i++) {
+        final int sqnone = Square.SqNone.ordinal();
+        for (int sq = 0; sq < sqnone; sq++) {
+          board[sq] = Piece.WhiteKing;
+        }
+        for (int sq = 0; sq < sqnone; sq++) {
+          board[sq] = Piece.BlackKing;
+        }
+        for (int sq = 0; sq < sqnone; sq++) {
+          res = board[sq];
+        }
+      }
+      long stop = System.nanoTime();
+      long elapsed = stop - start;
+      System.out.println("Test took    " + String.format("%,d", elapsed) + " ns for " + String.format("%,d", iterations) + " iterations");
+      System.out.println("Test took    " + String.format("%,d", (elapsed / iterations)) + " ns per test");
+      System.out.println("Test per sec " + String.format("%,d", (long)(iterations * 1e9) / elapsed) + " tps");
+    }
+
+    System.out.println();
+
+    for (int r = 1; r <= rounds; r++) {
+      System.out.println("Round " + r);
+      long start = System.nanoTime();
+      for (long i = 0; i < iterations; i++) {
+        for (Square sq : Square.values) {
+          if (sq == Square.SqNone) continue;
+          board2.put(sq, Piece.WhiteKing);
+        }
+        for (Square sq : Square.values) {
+          if (sq == Square.SqNone) continue;
+          board2.put(sq, Piece.BlackKing);
+        }
+        for (Square sq : Square.values) {
+          if (sq == Square.SqNone) continue;
+          res = board2.get(sq);
+        }
       }
       long stop = System.nanoTime();
       long elapsed = stop - start;

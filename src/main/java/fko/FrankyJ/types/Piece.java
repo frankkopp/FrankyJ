@@ -48,6 +48,13 @@ public enum Piece {
   BlackQueen     (Black,   Queen , 'q', 'q', "♝");
   // @formatter:on
 
+  // pre-filled list with all squares
+  public static final Piece[] values;
+
+  static {
+    values = Piece.values();
+  }
+
   public final Color     color;
   public final PieceType pieceType;
   public final char      symbol;
@@ -60,5 +67,27 @@ public enum Piece {
     this.symbol = symbol;
     this.symbol2 = symbol2;
     this.unicodeSymbol = unicodeSymbol;
+  }
+
+  public static Piece getPiece(Color c, PieceType pt) {
+    return Piece.values[c.ordinal() * 6 + pt.ordinal()];
+  }
+
+  public static Piece getPiece(final char string) {
+    return switch (string) {
+      case 'K' -> WhiteKing;
+      case 'P' -> WhitePawn;
+      case 'N' -> WhiteKnight;
+      case 'B' -> WhiteBishop;
+      case 'R' -> WhiteRook;
+      case 'Q' -> WhiteQueen;
+      case 'k' -> BlackKing;
+      case 'p' -> BlackPawn;
+      case 'n' -> BlackKnight;
+      case 'b' -> BlackBishop;
+      case 'r' -> BlackRook;
+      case 'q' -> BlackQueen;
+      default -> PieceNone;
+    };
   }
 }

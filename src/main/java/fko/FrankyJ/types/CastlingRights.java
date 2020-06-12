@@ -25,6 +25,8 @@
 
 package fko.FrankyJ.types;
 
+import static fko.FrankyJ.types.Square.*;
+
 /**
  * CastlingRights encodes the castling state e.g. available castling
  * and defines functions to change this state
@@ -48,7 +50,18 @@ public class CastlingRights {
   public static final int CastlingBlack    = CastlingBlackOO | CastlingBlackOOO;// 0b1100;
   public static final int CastlingAny      = CastlingWhite | CastlingBlack;// 0b1111;
 
-  public static final int CastlingLength = 8;
+  public static final int CastlingLength = 16;
+
+  public static final int[] castlingRights = new int[values.length];
+
+  static {
+    castlingRights[SqE1.ordinal()] = CastlingWhite;
+    castlingRights[SqA1.ordinal()] = CastlingWhiteOOO;
+    castlingRights[SqH1.ordinal()] = CastlingWhiteOO;
+    castlingRights[SqE8.ordinal()] = CastlingBlack;
+    castlingRights[SqA8.ordinal()] = CastlingBlackOOO;
+    castlingRights[SqH8.ordinal()] = CastlingBlackOO;
+  }
 
   /**
    * checks if the state has the bit for the Castling right set and

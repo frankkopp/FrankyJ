@@ -125,7 +125,7 @@ public class Bitboard {
     for (int r = 7; r >= 0; --r) {
       for (int f = 0; f <= 7; ++f) {
         sb.append(
-          Bitboard.has(bitboard, Square.getSquare(File.get(f), Rank.get(r))) ? "| X " : "|   ");
+          Bitboard.has(bitboard, Square.getSquare(File.getFile(f), Rank.getRank(r))) ? "| X " : "|   ");
       }
       sb.append("|\n+---+---+---+---+---+---+---+---+\n");
     }
@@ -146,6 +146,11 @@ public class Bitboard {
     }
     sb.append(" (" + bitboard + ")");
     return sb.toString();
+  }
+
+
+  static {
+
   }
 
 }

@@ -23,28 +23,22 @@
  *
  */
 
-package fko.FrankyJ.types;
+package fko.FrankyJ.position;
 
-// MoveType is used for the different move types we use to encode moves.
-//  Normal
-//	Promotion
-//	EnPassant
-//	Castling
-public enum MoveType {
-  Normal,
-  Promotion,
-  EnPassant,
-  Castling;
+import fko.FrankyJ.types.Piece;
+import fko.FrankyJ.types.Square;
 
-  // pre-filled list with all squares
-  public static final MoveType[] values;
+import static fko.FrankyJ.position.Position.Flag;
 
-  static {
-    values = MoveType.values();
-  }
-
-  public static MoveType getMoveType(int mt) {
-    if (mt > Castling.ordinal()) throw new IllegalArgumentException("No move with ordinal " + mt);
-    return MoveType.values[mt];
-  }
+// History stack
+public class HistoryStack {
+  long   zobristKeyHistory;
+  long   pawnZobristKeyHistory;
+  int    moveHistory;
+  Piece  fromPieceHistory;
+  Piece  capturedPieceHistory;
+  int    castlingRightsHistory;
+  Square enPassantHistory;
+  int    halfMoveClockHistory;
+  Flag   hasCheckFlagHistory;
 }

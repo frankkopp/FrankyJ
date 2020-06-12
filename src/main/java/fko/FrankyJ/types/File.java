@@ -33,6 +33,13 @@ public enum File {
   a, b, c, d, e, f, g, h, NoFile;
 
   // pre-filled list with all squares
+  public static final File[] values;
+
+  static {
+    values = File.values();
+  }
+
+  // pre-filled list with all squares
   public final long Bb;
 
   File() {
@@ -42,8 +49,9 @@ public enum File {
   }
 
   // returns the enum File for a given file number
-  public static File get(int file) {
-    return File.values()[file];
+  public static File getFile(int file) {
+    if (file < 0 || file > 7) return NoFile;
+    return File.values[file];
   }
 
   // returns the distance in moves between files

@@ -35,6 +35,13 @@ public enum Direction {
   Southwest(-9), // South + West
   Northwest(7); // North + West
 
+  // pre-filled list with all squares
+  public static final Direction[] values;
+
+  static {
+    values = Direction.values();
+  }
+
   public final int dir;
 
   Direction(final int d) {

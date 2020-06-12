@@ -25,26 +25,17 @@
 
 package fko.FrankyJ.types;
 
-// MoveType is used for the different move types we use to encode moves.
-//  Normal
-//	Promotion
-//	EnPassant
-//	Castling
-public enum MoveType {
-  Normal,
-  Promotion,
-  EnPassant,
-  Castling;
+import org.junit.jupiter.api.Test;
 
-  // pre-filled list with all squares
-  public static final MoveType[] values;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-  static {
-    values = MoveType.values();
-  }
+class PieceTest {
 
-  public static MoveType getMoveType(int mt) {
-    if (mt > Castling.ordinal()) throw new IllegalArgumentException("No move with ordinal " + mt);
-    return MoveType.values[mt];
+  @Test
+  void getPiece() {
+    assertEquals(Piece.WhiteKing, Piece.getPiece(Color.White, PieceType.King));
+    assertEquals(Piece.BlackKing, Piece.getPiece(Color.Black, PieceType.King));
+    assertEquals(Piece.WhiteQueen, Piece.getPiece(Color.White, PieceType.Queen));
+    assertEquals(Piece.BlackQueen, Piece.getPiece(Color.Black, PieceType.Queen));
   }
 }

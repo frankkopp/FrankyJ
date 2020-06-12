@@ -38,6 +38,13 @@ public enum PieceType {
   Queen    (true,  4,  900,  "Queen", 'Q');
   // @formatter:on
 
+  // pre-filled list with all squares
+  public static final PieceType[] values;
+
+  static {
+    values = PieceType.values();
+  }
+
   public final boolean sliding;
   public final int gamePhaseValue;
   public final int value;
@@ -54,7 +61,7 @@ public enum PieceType {
 
   public static PieceType getPieceType(int pt) {
     if (pt > Queen.ordinal()) return PtNone;
-    return PieceType.values()[pt];
+    return PieceType.values[pt];
   }
 
 }

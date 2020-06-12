@@ -33,6 +33,13 @@ package fko.FrankyJ.types;
    r1, r2, r3, r4, r5, r6, r7, r8, NoRank;
 
    // pre-filled list with all squares
+   public static final Rank[] values;
+
+   static {
+     values = Rank.values();
+   }
+
+   // pre-filled list with all squares
    public final long Bb;
 
    Rank() {
@@ -44,8 +51,9 @@ package fko.FrankyJ.types;
    /**
     * returns the enum Rank for a given rank number
     */
-   public static Rank get(int rank) {
-     return Rank.values()[rank];
+   public static Rank getRank(int rank) {
+     if (rank < 0 || rank > 7) return NoRank;
+     return Rank.values[rank];
    }
 
    // returns the distance in moves between ranks

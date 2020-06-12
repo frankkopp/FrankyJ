@@ -38,6 +38,11 @@ public enum Square {
   SqNone;
   // @formatter:on
 
+  // pre-filled list with all squares
+  public static final Square[] values;
+
+  static public int length = 64;
+
   public final long Bb;
   public final File file;
   public final Rank rank;
@@ -48,8 +53,8 @@ public enum Square {
 
   Square() {
     if (ordinal() < 64) {
-      file = File.values()[ordinal() & 7];
-      rank = Rank.values()[ordinal() >>> 3];
+      file = File.values[ordinal() & 7];
+      rank = Rank.values[ordinal() >>> 3];
       Bb = 1L << ordinal();
     } else {
       file = File.NoFile;
@@ -62,19 +67,21 @@ public enum Square {
   // constructor
 
   static {
+    values = Square.values();
+
     // pre-compute fields
-    for (Square s : Square.values()) {
+    for (Square s : values) {
       if (s == SqNone) continue;
 
       // distance
-      for (Square s2 : Square.values()) {
+      for (Square s2 : Square.values) {
         if (s2 == SqNone) continue;
         s.distance[s2.ordinal()] =
           Math.max(File.distance(s.file, s2.file), Rank.distance(s.rank, s2.rank));
       }
 
       // neighbours
-      for (Direction d : Direction.values()) {
+      for (Direction d : Direction.values) {
         int idx = s.ordinal();
         switch (d) {
           case North, South -> {
@@ -106,13 +113,19 @@ public enum Square {
 
   public static Square getSquare(int sq) {
     if (sq >= SqNone.ordinal()) return SqNone;
-    return Square.values()[sq];
+    return Square.values[sq];
   }
 
   public static Square getSquare(File f, Rank r) {
     if (f == File.NoFile || r == Rank.NoRank) return SqNone;
     // index starts with 0 while file and rank start with 1 - decrease
-    return Square.values()[(r.ordinal() << 3) + f.ordinal()];
+    return Square.values[(r.ordinal() << 3) + f.ordinal()];
+  }
+
+  public static Square makeSquare(String sqString) {
+    final int file = sqString.charAt(0) - 'a';
+    final int rank = sqString.charAt(1) - '1';
+    return Square.getSquare(File.getFile(file), Rank.getRank(rank));
   }
 
   public Square to(Direction d) {

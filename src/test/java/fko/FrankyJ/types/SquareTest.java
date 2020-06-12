@@ -38,7 +38,7 @@ class SquareTest {
     assertEquals(SqH8, getSquare(63));
     assertEquals(SqNone, getSquare(64));
     assertEquals(SqNone, getSquare(99));
-    assertEquals(SqA1, getSquare(File.get(0), Rank.get(0)));
+    assertEquals(SqA1, getSquare(File.getFile(0), Rank.getRank(0)));
     assertEquals(SqA1, getSquare(File.a, Rank.r1));
     assertEquals(SqNone, getSquare(File.NoFile, Rank.r1));
   }
