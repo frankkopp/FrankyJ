@@ -74,8 +74,8 @@ class PositionTest {
 
   @Test
   void PositionTimingTest() {
-    final int rounds = 20;
-    final long iterations = 10_000_000L;
+    final int rounds = 10;
+    final long iterations = 20_000_000L;
 
     Position p = new Position("r3k2r/1ppn3p/4q1n1/8/4Pp2/3R4/p1p2PPP/R5K1 b kq e3 0 1");
     final int move1 = Move.createMove(SqF4, SqE3, MoveType.EnPassant);

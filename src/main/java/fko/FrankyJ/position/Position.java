@@ -246,7 +246,7 @@ public class Position {
           halfMoveClock = 0;// reset half move clock because of capture
         } else if (board[fromSq.ordinal()].pieceType == PieceType.Pawn) {
           halfMoveClock = 0;                // reset half move clock because of pawn move
-          if (Math.abs(fromSq.ordinal() - toSq.ordinal()) == 16) {// pawn double - set en passant
+          if (fromSq.distance(toSq) == 2) { // pawn double - set en passant
             // set new en passant target field - always one "behind" the toSquare
             enPassantSquare = toSq.pawnPush(board[fromSq.ordinal()].color.flip());
             zobristKey = zobristKey ^ Zobrist.enPassantFile_Zobrist[enPassantSquare.file.ordinal()];// in

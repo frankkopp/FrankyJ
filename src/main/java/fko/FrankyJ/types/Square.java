@@ -65,6 +65,44 @@ public enum Square {
 
   // initialization and pre-computation which can't be done in
   // constructor
+  public static Square getSquare(int sq) {
+    if (sq >= SqNone.ordinal()) return SqNone;
+    return Square.values[sq];
+  }
+
+  public static Square getSquare(File f, Rank r) {
+    if (f == File.NoFile || r == Rank.NoRank) return SqNone;
+    // index starts with 0 while file and rank start with 1 - decrease
+    return Square.values[(r.ordinal() << 3) + f.ordinal()];
+  }
+
+  public static Square makeSquare(String sqString) {
+    final int file = sqString.charAt(0) - 'a';
+    final int rank = sqString.charAt(1) - '1';
+    return Square.getSquare(File.getFile(file), Rank.getRank(rank));
+  }
+
+  public Square to(Direction d) {
+    return this.neighbours[d.ordinal()];
+  }
+
+  public int distance(Square sq) {
+    return distance[sq.ordinal()];
+  }
+
+  public Square pawnPush(Color c) {
+    return c == Color.White
+           ? this.neighbours[Direction.North.ordinal()]
+           : this.neighbours[Direction.South.ordinal()];
+  }
+
+  @Override
+  public String toString() {
+    if (this.ordinal() >= SqNone.ordinal()) {
+      return "--";
+    }
+    return file.toString() + rank.toString();
+  }
 
   static {
     values = Square.values();
@@ -109,44 +147,5 @@ public enum Square {
         }
       }
     }
-  }
-
-  public static Square getSquare(int sq) {
-    if (sq >= SqNone.ordinal()) return SqNone;
-    return Square.values[sq];
-  }
-
-  public static Square getSquare(File f, Rank r) {
-    if (f == File.NoFile || r == Rank.NoRank) return SqNone;
-    // index starts with 0 while file and rank start with 1 - decrease
-    return Square.values[(r.ordinal() << 3) + f.ordinal()];
-  }
-
-  public static Square makeSquare(String sqString) {
-    final int file = sqString.charAt(0) - 'a';
-    final int rank = sqString.charAt(1) - '1';
-    return Square.getSquare(File.getFile(file), Rank.getRank(rank));
-  }
-
-  public Square to(Direction d) {
-    return this.neighbours[d.ordinal()];
-  }
-
-  public int distance(Square sq) {
-    return distance[sq.ordinal()];
-  }
-
-  public Square pawnPush(Color c) {
-    return c == Color.White
-           ? this.neighbours[Direction.North.ordinal()]
-           : this.neighbours[Direction.South.ordinal()];
-  }
-
-  @Override
-  public String toString() {
-    if (this.ordinal() >= SqNone.ordinal()) {
-      return "--";
-    }
-    return file.toString() + rank.toString();
   }
 }
